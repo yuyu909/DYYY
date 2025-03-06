@@ -339,10 +339,10 @@
             if (settingVC) {
                 settingVC.modalPresentationStyle = UIModalPresentationFullScreen;
                 
+               
                 UIButton *closeButton = [UIButton buttonWithType:UIButtonTypeSystem];
                 [closeButton setTitle:@"关闭" forState:UIControlStateNormal];
                 closeButton.translatesAutoresizingMaskIntoConstraints = NO;
-                
                 [settingVC.view addSubview:closeButton];
                 
                 [NSLayoutConstraint activateConstraints:@[
@@ -351,18 +351,38 @@
                     [closeButton.widthAnchor constraintEqualToConstant:80],
                     [closeButton.heightAnchor constraintEqualToConstant:40]
                 ]];
-                
                 [closeButton addTarget:self action:@selector(closeSettings:) forControlEvents:UIControlEventTouchUpInside];
+                
+              
+                UIButton *exitButton = [UIButton buttonWithType:UIButtonTypeSystem];
+                [exitButton setTitle:@"退出" forState:UIControlStateNormal];
+                exitButton.translatesAutoresizingMaskIntoConstraints = NO;
+                [settingVC.view addSubview:exitButton];
+                
+                [NSLayoutConstraint activateConstraints:@[
+                    [exitButton.leadingAnchor constraintEqualToAnchor:settingVC.view.leadingAnchor constant:10], 
+                    [exitButton.topAnchor constraintEqualToAnchor:settingVC.view.topAnchor constant:40],         
+                    [exitButton.widthAnchor constraintEqualToConstant:80],                                      
+                    [exitButton.heightAnchor constraintEqualToConstant:40]                                     
+                ]];
+                [exitButton addTarget:self action:@selector(exitApp:) forControlEvents:UIControlEventTouchUpInside];
                 
                 [rootViewController presentViewController:settingVC animated:YES completion:nil];
             }
         }
     }
 }
+
 %new
 - (void)closeSettings:(UIButton *)button {
     [button.superview.window.rootViewController dismissViewControllerAnimated:YES completion:nil];
 }
+
+%new
+- (void)exitApp:(UIButton *)button {
+    exit(0);
+}
+
 %end
 
 %hook AWEFeedLiveMarkView
